@@ -9,7 +9,35 @@ apt-add-repository ppa:ondrej/php -y
 add-apt-repository ppa:nginx/development -y
 apt update -y
 
-apt install -y git curl nano vim openssl mcrypt wget build-essential unzip nginx
+apt install -y git curl nano vim openssl mcrypt wget build-essential unzip nginx 
+
+apt install -y \
+  xvfb \
+  x11-xkb-utils \
+  xfonts-100dpi \
+  xfonts-75dpi \
+  xfonts-scalable \
+  xfonts-cyrillic \
+  x11-apps \
+  clang \
+  libdbus-1-dev \
+  libgtk2.0-dev \
+  libnotify-dev \
+  libgnome-keyring-dev \
+  libgconf2-dev \
+  libasound2-dev \
+  libcap-dev \
+  libcups2-dev \
+  libxtst-dev \
+  libxss1 \
+  libnss3-dev \
+  gcc-multilib \
+  g++-multilib
+
+apt install -y build-essential libgmp-dev htop libpq-dev git-core curl imagemagick
+
+
+
 
 apt install -y php7.1 php7.1-pgsql php7.1-curl php7.1-cli php7.1-mbstring php7.1-xml php7.1-json php7.1-mcrypt php7.1-fpm php7.1-zip 
 
@@ -47,6 +75,11 @@ echo "date.timezone = \"Europe/London\"" >> /etc/php/7.1/fpm/php.ini
 # nodejs
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
+# npm Prevent Permissions Errors
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+source ~/.profile
 
 #copy nginx site conf
 rm /etc/nginx/sites-enabled/default
@@ -56,7 +89,8 @@ cp /home/vagrant/code/revisions/nginx-config/nginx-vhost.conf /etc/nginx/conf.d/
 cp /home/vagrant/code/revisions/nginx-config/nginx-vhost.conf /etc/nginx/sites-available/default.conf
 # ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 
-systemctl restart nginx.service
+sudo systemctl start nginx.service
+sudo systemctl restart nginx.service
 
 echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >> /etc/apt/sources.list.d/pgdg.list
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -

@@ -1,10 +1,10 @@
 {
   "tests": "./*_test.js",
-  "timeout": 10000,
+  "timeout": 60000,
   "output": "./output",
   "helpers": {
     "Nightmare": {
-      "url": "https://github.com/"
+      "url": "http://127.0.0.1/"
     }
   },
   "include": {
